@@ -13,7 +13,8 @@ connectDB()
 
 app.use("/api/v1/plataformas/", plataformasRouter)
 app.use("/api/v1/cursos/", cursosRouter)
-app.use("/api/v1/usersRoutes")
+app.use("/api/v1/users", usersRoutes)
+
 
 app.use("*", (req, res, next) => {
   return res.status(404).json("Route not found")
