@@ -1,4 +1,5 @@
-const User = require("../models/users")
+const User = require('../models/users')
+const bcrypt = require("bcrypt")
 
 const getUsers = async (req, res, next) => {
   try {
@@ -7,43 +8,42 @@ const getUsers = async (req, res, next) => {
   } catch (error) {
     return res.status(400).json(error)
   }
-
 }
 
-const register = async (req, res, next) => { 
+const register = async (req, res, next) => {
   try {
     const newUser = new User({
       userName: req.body.userName,
       password: req.body.password,
-      rol: "user"
+      rol: 'user'
     })
-    const duplicateUser = await User.findOne ({userName: req.body, userName})
+    const duplicateUser = await User.findOne({ userName: req.body.userName })
     if (duplicateUser) {
-      return res.status(400).json( "No válido, busca otro nombre 🤓")
-
+      return res.status(400).json('No válido, busca otro nombre 🤓')
     }
 
     const userSaved = await newUser.save()
     return res.status(201).json(userSaved)
-    
   } catch (error) {
     return res.status(400).json(error)
-    
   }
 }
 
 const login = async (req, res, next) => {
   try {
-    const user = await User.findOne({ userName: req.body.userName})
-    if (!user){
-      return res.status(400).json("usuario no válido")
+    const user = await User.findOne({ userName: req.body.userName })
+    if (!user) {
+      return res.status(400).json('usuario no válido')
     }
-    return res.status(400).json("Usuario si válido")
-    
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(200).json("hemos entrado")
+
+    } else{
+    return res.status(400).json('Contraseña no valida')
+  }
   } catch (error) {
     return res.status(400).json(error)
-    
   }
 }
 
-module.exports = { getUsers, register, login}
+module.exports = { getUsers, register, login }
