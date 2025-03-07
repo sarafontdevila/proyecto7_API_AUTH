@@ -1,4 +1,4 @@
-const { generateSign } = require("../../config/jwt")
+const { generateSign } = require('../../config/jwt')
 const User = require('../models/users')
 const bcrypt = require("bcrypt")
 
