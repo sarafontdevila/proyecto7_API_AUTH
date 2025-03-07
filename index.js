@@ -7,6 +7,7 @@ const plataformasRouter = require("./src/api/routes/plataformas")
 
 
 const app = express()
+app.use(express.json())
 
 app.use("/api/v1/plataformas/", plataformasRouter)
 app.use("/api/v1/cursos/", cursosRouter)
