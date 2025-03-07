@@ -9,11 +9,8 @@ const usersRoutes = require("./src/api/routes/users")
 
 const app = express()
 app.use(express.json())
-<<<<<<< HEAD
-=======
 
 connectDB()
->>>>>>> cc8683c32ddac182ab18d628e92e52340f859d44
 
 app.use("/api/v1/plataformas/", plataformasRouter)
 app.use("/api/v1/cursos/", cursosRouter)
