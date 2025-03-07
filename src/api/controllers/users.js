@@ -1,3 +1,4 @@
+const { generateSign } = require("../../config/jwt")
 const User = require('../models/users')
 const bcrypt = require("bcrypt")
 
@@ -33,13 +34,14 @@ const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ userName: req.body.userName })
     if (!user) {
-      return res.status(400).json('usuario no válido')
+      return res.status(400).json('Usuario no válido')
     }
     if (bcrypt.compareSync(req.body.password, user.password)) {
-      return res.status(200).json("hemos entrado")
+      const token = generateSign(user._id)
+      return res.status(200).json({ user,token })
 
     } else{
-    return res.status(400).json('Contraseña no valida')
+      return res.status(400).json('Contraseña no valida')
   }
   } catch (error) {
     return res.status(400).json(error)
