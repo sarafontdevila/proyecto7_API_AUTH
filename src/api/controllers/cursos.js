@@ -2,12 +2,21 @@ const Curso = require("../models/cursos")
 
 const getCursos = async (req, res, next) => {
   try {
-    const cursos = await Curso.find();
+    const cursos = await Curso.find({verified:true});
     return res.status(200).json(cursos)
   } catch (error) {
     return res.status(400).json("Error en get") 
   }
 }
+const getCursosNotVerified = async (req, res, next) => {
+  try {
+    const cursos = await Curso.find({verified:false});
+    return res.status(200).json(cursos)
+  } catch (error) {
+    return res.status(400).json("Error en get") 
+  }
+}
+
 
 const getCursosById = async (req, res, next) => {
   try {
@@ -43,8 +52,13 @@ const getCursosByPrice = async (req, res, next) => {
 }
 const postCurso = async (req, res, next) => {
   try {
-    console.log(req.body)
     const newCurso = new Curso(req.body)
+
+    if(req.user.rol === "admin") {newCurso.verified = true
+
+    }else {
+      newCurso.verified = false
+    }
     const cursoSaved = await newCurso.save()
     return res.status(201).json(cursoSaved)
     
@@ -82,5 +96,6 @@ module.exports = {
   getCursosByPrice,
   postCurso,
   putCurso,
-  deleteCurso
+  deleteCurso,
+  getCursosNotVerified
 }

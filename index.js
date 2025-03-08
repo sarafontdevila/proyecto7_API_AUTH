@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const { connectDB } = require ("./src/config/db")
 const cursosRouter = require("./src/api/routes/cursos")
 const plataformasRouter = require("./src/api/routes/plataformas")
+const cors = require("cors")
 const usersRoutes = require("./src/api/routes/users")
 
 

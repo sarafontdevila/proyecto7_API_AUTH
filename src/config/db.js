@@ -6,7 +6,7 @@ const connectDB = async () => {
     console.log("Conectado con exito a la bbdd 🚀")
   }
   catch(error){
-    console.log("Algo ha salido mal, no conectado a BBDD", error.message)
+    console.log("Algo ha salido mal, no conectado a BBDD")
   }
 }
 

@@ -9,8 +9,10 @@ const cursoSchema = new mongoose.Schema({
      "tecnologia",
     "finanzas"
     ]
-  }
+  },
+  verified: {type:Boolean, required:true, default:false},
 },
+
 {
   timestamps:true,
   collection:"cursos"
