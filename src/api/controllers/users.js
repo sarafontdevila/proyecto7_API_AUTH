@@ -13,10 +13,11 @@ const getUsers = async (req, res, next) => {
 
 const register = async (req, res, next) => {
   try {
+    const rol = req.body.rol || 'user'
     const newUser = new User({
       userName: req.body.userName,
       password: req.body.password,
-      rol: 'user'
+      rol: rol
     })
     const duplicateUser = await User.findOne({ userName: req.body.userName })
     if (duplicateUser) {

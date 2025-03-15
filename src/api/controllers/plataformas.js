@@ -2,7 +2,7 @@ const Plataforma = require("../models/plataformas")
 
 const getPlataformas = async (req, res, next) => {
   try {
-    const plataformas = await Plataforma.find().populate("apps");
+    const plataformas = await Plataforma.find().populate("cursos");
     return res.status(200).json(plataformas)
   } catch (error) {
     return res.status(400).json("Error en get") 
@@ -12,7 +12,7 @@ const getPlataformas = async (req, res, next) => {
 const getPlataformasById = async (req, res, next) => {
   try {
     const {id }= req.params
-    const plataforma = await Plataforma.findById(id).populate("apps")
+    const plataforma = await Plataforma.findById(id).populate("cursos")
     return res.status(200).json(plataforma)
     
   } catch (error) {

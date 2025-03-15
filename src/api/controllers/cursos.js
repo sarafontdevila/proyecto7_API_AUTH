@@ -46,7 +46,7 @@ const getCursosByPrice = async (req, res, next) => {
     return res.status(200).json(cursos)
     
   } catch (error) {
-    return res.status(400).json("Error en getByPricePro")
+    return res.status(400).json("Error en getByPrice")
     
   }
 }
