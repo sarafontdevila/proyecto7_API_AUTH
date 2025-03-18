@@ -10,6 +10,52 @@ const getUsers = async (req, res, next) => {
     return res.status(400).json(error)
   }
 }
+const putUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userMakingRequest = req.user; 
+    const userToUpdate = await User.findById(id);
+    
+    if (!userToUpdate) {
+      return res.status(404).json('Usuario no encontrado');
+    }
+    if (req.body.rol && req.body.rol !== userToUpdate.rol && userMakingRequest.rol !== 'admin') {
+      return res.status(403).json('Solo los administradores pueden cambiar roles de usuario');
+    }
+    
+    const newUser = new User(req.body);
+    newUser._id = id;
+    
+    const userUpdated = await User.findByIdAndUpdate(id, newUser, {new: true});
+    return res.status(200).json(userUpdated);
+
+  } catch (error) {
+    return res.status(400).json("Error al actualizar usuario");
+  }
+};
+const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userToDelete = await User.findById(id);
+    const userMakingRequest = req.user; 
+
+    if (!userToDelete) {
+      return res.status(404).json('Usuario no encontrado');
+    }
+
+    if (userMakingRequest.rol === 'admin' || userMakingRequest._id.toString() === id) {
+      const deletedUser = await User.findByIdAndDelete(id);
+      return res.status(200).json({
+        message: 'Usuario eliminado correctamente',
+        user: deletedUser
+      });
+    } else {
+      return res.status(403).json('No tienes permisos para eliminar este usuario');
+    }
+  } catch (error) {
+    return res.status(400).json('Error al eliminar usuario');
+  }
+};
 
 const register = async (req, res, next) => {
   try {
@@ -49,4 +95,4 @@ const login = async (req, res, next) => {
   }
 }
 
-module.exports = { getUsers, register, login }
+module.exports = { getUsers, putUser, deleteUser, register, login }
