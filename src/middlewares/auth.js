@@ -3,7 +3,7 @@ const {verifyJwt} = require("../config/jwt")
 const isAuth = async (req, res, next) => {
   try {
     const token = req.headers.authorization
-    const parsedToken = token.replace('Bearer, ', '')
+    const parsedToken = token.replace('Bearer', '')
     const { id } = verifyJwt(parsedToken)
 
     const user = await User.findById(id)
