@@ -8,7 +8,7 @@ const cursoSchema = new mongoose.Schema({
     ["marketing",
      "tecnologia",
     "finanzas"
-    ]
+    ],
   },
   verified: {type:Boolean, required:true, default:false},
 },
