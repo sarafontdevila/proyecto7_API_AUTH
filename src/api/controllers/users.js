@@ -61,11 +61,11 @@ const register = async (req, res, next) => {
   try {
     const rol = req.body.rol || 'user'
     const newUser = new User({
-      userName: req.body.userName,
+      username: req.body.username,
       password: req.body.password,
       rol: rol
     })
-    const duplicateUser = await User.findOne({ userName: req.body.userName })
+    const duplicateUser = await User.findOne({ username: req.body.username })
     if (duplicateUser) {
       return res.status(400).json('No válido, busca otro nombre 🤓')
     }
@@ -79,7 +79,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    const user = await User.findOne({ userName: req.body.userName })
+    const user = await User.findOne({ username: req.body.username })
     if (!user) {
       return res.status(400).json('Usuario no válido')
     }
