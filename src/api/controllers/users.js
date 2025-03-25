@@ -13,7 +13,7 @@ const getUsers = async (req, res, next) => {
 const putUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    /*const userMakingRequest = req.user; */
+    const userMakingRequest = req.user; 
     const userToUpdate = await User.findById(id);
     
     if (!userToUpdate) {
@@ -22,11 +22,7 @@ const putUser = async (req, res, next) => {
     if (req.body.rol && req.body.rol !== userToUpdate.rol && userMakingRequest.rol !== 'admin') {
       return res.status(403).json('Solo los administradores pueden cambiar roles de usuario');
     }
-    
-    const newUser = new User(req.body);
-    newUser._id = id;
-    
-    const userUpdated = await User.findByIdAndUpdate(id, newUser, {new: true});
+    const userUpdated = await User.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
     return res.status(200).json(userUpdated);
 
   } catch (error) {
