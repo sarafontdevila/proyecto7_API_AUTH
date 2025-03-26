@@ -69,6 +69,7 @@ JWT_SECRET=tu_secreto_jwt
 Iniciar el servidor
 
 bashCopynpm start
+
 🌐 Estructura de Middlewares
 Autenticación (middlewares/auth.js)
 
