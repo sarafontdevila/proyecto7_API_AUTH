@@ -2,7 +2,11 @@ const Plataforma = require("../models/plataformas")
 
 const getPlataformas = async (req, res, next) => {
   try {
-    const plataformas = await Plataforma.find().populate("cursos");
+    const plataformas = await Plataforma.find().populate({ 
+      path: "cursos",
+      select: "nombre",
+    });
+    console.log ("plataformas encontrados:", plataformas)
     return res.status(200).json(plataformas)
   } catch (error) {
     return res.status(400).json("Error en get") 
