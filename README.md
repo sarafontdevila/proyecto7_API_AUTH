@@ -68,7 +68,7 @@ JWT_SECRET=tu_secreto_jwt
 
 Iniciar el servidor
 
-bashCopynpm start
+bash Copy npm start
 
 🌐 Estructura de Middlewares
 Autenticación (middlewares/auth.js)
@@ -81,6 +81,31 @@ Semillas de Datos (utils/seeds/cursos.js)
 
 Script para poblar base de datos
 Creación de datos iniciales de prueba
+
+🌐 Endpoints de la API
+
+Users
+
+POST /api/v1/users/register: Registro de usuarios
+POST /api/v1/users/login: Inicio de sesión
+GET /api/v1/users: Obtener perfil/listado de usuarios
+PUT /api/v1/users/:id : Actualizar usuario
+DELETE /api/v1/users/:id : Eliminar usuario
+
+
+Cursos
+
+GET /api/v1/cursos: Listar todos los cursos
+POST /api/v1/cursos: Crear nuevo curso 
+PUT /api/v1/cursos/:id: Actualizar curso 
+DELETE /api/v1/cursos/:id: Eliminar curso 
+
+Plataformas
+
+GET /api/v1/plataformas: Listar plataformas
+POST /api/v1/plataformas: Crear plataforma 
+PUT /api/v1/plataformas/:id: Actualizar plataforma 
+DELETE /api/v1/plataformas/:id: Eliminar plataforma 
 
 🛡 Características de Seguridad
 
