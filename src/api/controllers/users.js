@@ -1,10 +1,11 @@
 const { generateSign } = require('../../config/jwt')
 const User = require('../models/users')
 const bcrypt = require("bcrypt")
+const cursos = require('../models/cursos')
 
 const getUsers = async (req, res, next) => {
   try {
-    const users = await User.find()
+    const users = await User.find().populate("cursos", "nombre")
     return res.status(200).json(users)
   } catch (error) {
     return res.status(400).json(error)

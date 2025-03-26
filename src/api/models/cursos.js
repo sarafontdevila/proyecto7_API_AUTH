@@ -4,13 +4,14 @@ const cursoSchema = new mongoose.Schema({
   nombre:{type:String, required:true},
   imagen:{type:String, required:true},
   precio:{type:Number, required:true},
-  tema: {type: String, required:true, enum:
-    ["marketing",
-     "tecnologia",
+  tema: {type: String, required:true, enum: [
+    "marketing",
+    "tecnologia",
     "finanzas"
-    ],
-  },
-  verified: {type:Boolean, required:true, default:false},
+  ]},
+  plataforma: { type: mongoose.Types.ObjectId,ref:"plataformas", required:false},
+  
+  verified: {type:Boolean, required:true, default:true},
 },
 
 {

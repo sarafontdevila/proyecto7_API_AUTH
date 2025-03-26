@@ -9,8 +9,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: ['admin', 'user'],
-      default: 'user'
-    }
+      default: 'user',
+    },
+    cursos: [{ type: mongoose.Types.ObjectId,ref:"cursos", required:false}],
   },
   {
     timestamps: true,

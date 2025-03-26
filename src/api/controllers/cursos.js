@@ -3,54 +3,14 @@ const Curso = require("../models/cursos")
 const getCursos = async (req, res, next) => {
   try {
     const cursos = await Curso.find({verified:true});
-    return res.status(200).json(cursos)
-  } catch (error) {
-    return res.status(400).json("Error en get") 
-  }
-}
-const getCursosNotVerified = async (req, res, next) => {
-  try {
-    const cursos = await Curso.find({verified:false});
+    console.log("cursos encontrados:", cursos)
     return res.status(200).json(cursos)
   } catch (error) {
     return res.status(400).json("Error en get") 
   }
 }
 
-
-const getCursosById = async (req, res, next) => {
-  try {
-    const {id }= req.params
-    const curso = await Curso.findById(id)
-    return res.status(200).json(app)
-    
-  } catch (error) {
-    return res.status(400).json("Error en getByID")
-    
-  }
-}
-const getCursosByTema = async (req, res, next) => {
-  try {
-    const { tema }= req.params
-    const cursos = await Curso.find({tema: tema})
-    return res.status(200).json(cursos)
-  } catch (error) {
-    return res.status(400).json("Error en getByTema")
-    
-  }
-}
-const getCursosByPrice = async (req, res, next) => {
-  try {
-    const { precio }= req.params
-    const apps = await Curso.find({precio: {$lt: precio}})
-    return res.status(200).json(cursos)
-    
-  } catch (error) {
-    return res.status(400).json("Error en getByPrice")
-    
-  }
-}
-const postCurso = async (req, res, next) => {
+/*const postCurso = async (req, res, next) => {
   try {
     const newCurso = new Curso(req.body)
 
@@ -66,7 +26,7 @@ const postCurso = async (req, res, next) => {
     return res.status(400).json("Error en post")
     
   }
-}
+}*/
 const putCurso = async (req, res, next) => {
   try {
     const { id }= req.params
@@ -79,6 +39,21 @@ const putCurso = async (req, res, next) => {
     return res.status(400).json("Error en put")
   }
 }
+const postCurso = async (req, res, next) => {
+  try {
+    if (req.user.rol !== "admin") {
+      return res.status(403).json({ message: "Acceso denegado. Solo los administradores pueden publicar cursos." });
+    }
+    const newCurso = new Curso({ ...req.body, verified: true });
+    const cursoSaved = await newCurso.save();
+
+    return res.status(201).json(cursoSaved);
+    
+  } catch (error) {
+    console.log(req.user)
+    return res.status(400).json({ message: "Error al publicar el curso", error });
+  }
+};
 const deleteCurso = async (req, res, next) => {
   try {
     const {id }= req.params
@@ -91,11 +66,7 @@ const deleteCurso = async (req, res, next) => {
 }
 module.exports = {
   getCursos,
-  getCursosById,
-  getCursosByTema,
-  getCursosByPrice,
   postCurso,
   putCurso,
   deleteCurso,
-  getCursosNotVerified
 }
