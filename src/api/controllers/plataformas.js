@@ -42,7 +42,7 @@ const putPlataforma = async (req, res, next) => {
     const oldPlataforma = await Plataforma.findById(id)
     const newPlataforma = new Plataforma(req.body)
     newPlataforma._id = id
-    newPlataforma.apps = [...oldPlataforma.apps,...req.body.apps]
+    newPlataforma.cursos = [...oldPlataforma.cursos,...req.body.cursos]
     const plataformaUpdated = await Plataforma.findByIdAndUpdate(id, newPlataforma, {new: true})
     return res.status(200).json(plataformaUpdated)
 
